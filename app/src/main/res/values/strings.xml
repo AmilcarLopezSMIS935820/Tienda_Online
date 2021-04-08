@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Tienda_Online</string>
+    <string name="bt1">Productos</string>
+    <string name="bt2">Formulario</string>
+    <string name="bt3">Integrantes</string>
+    <string name="titulo">Ingreso de producto</string>
+    <string name="f1">Ingresar</string>
+    <string name="f2">Actualizar</string>
+    <string name="f3">Eliminar</string>
+    <string name="f4">Ver Registro</string>
+</resources>
