@@ -1,5 +1,6 @@
 package com.smis935820.tienda_online;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,6 +41,34 @@ public class Producto extends AppCompatActivity {
         c.moveToPosition(info.position);
         menu.setHeaderTitle("Opciones");
     }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.delete:
+                try {
+                    String productos[]={c.getString(1),c.getString(2)};
+                    Bundle bundle=new Bundle();
+                    bundle.putString("action","delete");
+                    bundle.putString("id",c.getString(0));
+                    bundle.putStringArray("productos",productos);
+
+                    Intent forMain=new Intent(Producto.this,Formulario.class);
+                    forMain.putExtras(bundle);
+                    startActivity(forMain);
+
+
+
+                }catch (Exception e){
+                    Toast.makeText(Producto.this,"Error:" + e.getMessage().toString(),
+                            Toast.LENGTH_LONG).show();
+                }
+                return true;
+            default:
+                return  super.onContextItemSelected(item);
+    }
+
+}
 
     private void showData() {
         DB = new DatabaseHandler(Producto.this);

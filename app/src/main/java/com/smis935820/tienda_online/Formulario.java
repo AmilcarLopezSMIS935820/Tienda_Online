@@ -7,26 +7,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Formulario extends AppCompatActivity {
-
-    EditText idProducto,  nombre, precio;
-    Button insert,  update, delete;
+    String id;
+    EditText idProducto, nombre, precio;
+    Button insert, update, delete;
     DatabaseHandler DB;
+    String action = "new";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario);
 
-        idProducto = (EditText)findViewById(R.id.idproducto);
-        nombre = (EditText)findViewById(R.id.nombre);
-        precio = (EditText)findViewById(R.id.precio);
+        idProducto = (EditText) findViewById(R.id.idproducto);
+        nombre = (EditText) findViewById(R.id.nombre);
+        precio = (EditText) findViewById(R.id.precio);
         insert = findViewById(R.id.btnInsert);
         update = findViewById(R.id.btnActualizar);
         delete = findViewById(R.id.btnEliminar);
         DB = new DatabaseHandler(this);
+        showData();
 
 
         ///Evento de boton
@@ -35,30 +38,76 @@ public class Formulario extends AppCompatActivity {
         insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String idTXT=idProducto.getText().toString().trim();
-                String nombreTXT=nombre.getText().toString().trim();
-                String precioTXT=precio.getText().toString().trim();
+                String idTXT = idProducto.getText().toString().trim();
+                String nombreTXT = nombre.getText().toString().trim();
+                String precioTXT = precio.getText().toString().trim();
 
-                if (validar()){
+                if (validar()) {
 
-                    Boolean checkInsert=DB.insertData(idTXT,  nombreTXT, precioTXT);
+                    Boolean checkInsert = DB.insertData(idTXT, nombreTXT, precioTXT);
 
                     //Evaluación de la data insertada
-                    if (checkInsert==true){
+                    if (checkInsert == true) {
                         Toast.makeText(Formulario.this, "Se ha insertado un nuevo registro", Toast.LENGTH_SHORT).show();
                         idProducto.setText("");
                         nombre.setText("");
                         precio.setText("");
                         idProducto.requestFocus();
-                    } else{
+                    } else {
                         Toast.makeText(Formulario.this, "No se ha podido insertado el registro", Toast.LENGTH_SHORT).show();
                     }
+                }
+            }
+        });
+        //Boton eliminar
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String codproducro = idProducto.getText().toString();
+
+                Boolean checkdelateData = DB.deleteData(codproducro);
+                if (checkdelateData == true) {
+                    Toast.makeText(Formulario.this, "Se elimino exisitosamente",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Formulario.this, "Error no se pudo eliminar ",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
 
     }
+
+    private void showData() {
+        try {
+            Bundle bundle = getIntent().getExtras();
+            action = bundle.getString("action");
+            if (action.equals("delete")) {
+                delete.setVisibility(View.VISIBLE);
+                insert.setVisibility(View.GONE);
+                update.setVisibility(View.GONE);
+
+
+                id = bundle.getString("id");
+                String productos[] = bundle.getStringArray("productos");
+                TextView tem = (TextView) findViewById(R.id.idproducto);
+                tem.setText(id);
+
+                tem = (TextView) findViewById(R.id.nombre);
+                tem.setText(productos[0].toString());
+
+                tem = (TextView) findViewById(R.id.precio);
+                tem.setText(productos[1].toString());
+            }
+        } catch (Exception e) {
+            Toast.makeText(Formulario.this, "Error:" +
+                    e.getMessage().toString(), Toast.LENGTH_LONG).show();
+
+        }
+    }
+
+
 
     ////Metodo de validacion de campo
     public boolean validar(){

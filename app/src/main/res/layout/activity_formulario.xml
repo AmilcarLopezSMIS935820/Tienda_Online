@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Formulario"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".Formulario">
 
     <TextView
         android:id="@+id/txtTitulo"
@@ -22,6 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="50dp"
@@ -114,7 +115,7 @@
             app:backgroundTint="#cf2D03" />
 
         <Button
-            android:id="@+id/btnEliminar"
+            android:id="@+id/btnActualizar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -126,7 +127,7 @@
             app:backgroundTint="#cf2D03" />
 
         <Button
-            android:id="@+id/btnActualizar"
+            android:id="@+id/btnEliminar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
