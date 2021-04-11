@@ -11,7 +11,7 @@
         android:id="@+id/txtTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="70dp"
         android:fontFamily="@font/boogaloo"
         android:text="@string/titulo"
         android:textColor="#423F4A"
@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="125dp"
+        android:layout_marginTop="150dp"
         android:layout_marginEnd="50dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -118,26 +118,40 @@
             android:id="@+id/btnActualizar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="50dp"
             android:background="#A10303"
             android:text="@string/f2"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:visibility="gone"
             app:backgroundTint="#cf2D03" />
 
         <Button
             android:id="@+id/btnEliminar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginTop="50dp"
             android:background="#A10303"
             android:text="@string/f3"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:visibility="gone"
             app:backgroundTint="#cf2D03" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#A10303"
+            android:contextClickable="true"
+            android:onClick="v1"
+            android:text="Registros"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:backgroundTint="#A10303" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

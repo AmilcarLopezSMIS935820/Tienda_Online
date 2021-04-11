@@ -8,4 +8,9 @@
     <string name="f2">Actualizar</string>
     <string name="f3">Eliminar</string>
     <string name="f4">Ver Registro</string>
+
+    <string name="i1">Josué Amílcar López Benítez</string>
+    <string name="i2">Josué Esaú Batres Guardado</string>
+    <string name="i3">Oscar Daniel Benítez Blanco</string>
+    <string name="i4">Andy Rodrigo Sorto Castillo</string>
 </resources>

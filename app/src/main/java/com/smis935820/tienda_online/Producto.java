@@ -45,6 +45,23 @@ public class Producto extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
+            case R.id.edit:
+                try {
+                    String productos[]={c.getString(1),c.getString(2)};
+                    Bundle bundle = new Bundle();
+                    bundle.putString("action", "edit");
+                    bundle.putString("id", c.getString(0));
+                    bundle.putStringArray("productos", productos);
+
+                    Intent forMain = new Intent(Producto.this, Formulario.class);
+                    forMain.putExtras(bundle);
+                    startActivity(forMain);
+
+                } catch (Exception e){
+                    Toast.makeText(Producto.this, "Error: " + e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                }
+               return true;
+
             case R.id.delete:
                 try {
                     String productos[]={c.getString(1),c.getString(2)};
@@ -57,18 +74,19 @@ public class Producto extends AppCompatActivity {
                     forMain.putExtras(bundle);
                     startActivity(forMain);
 
-
-
                 }catch (Exception e){
-                    Toast.makeText(Producto.this,"Error:" + e.getMessage().toString(),
+                    Toast.makeText(Producto.this,"Error: " + e.getMessage().toString(),
                             Toast.LENGTH_LONG).show();
                 }
                 return true;
+
             default:
                 return  super.onContextItemSelected(item);
     }
 
 }
+
+    
 
     private void showData() {
         DB = new DatabaseHandler(Producto.this);
@@ -90,6 +108,9 @@ public class Producto extends AppCompatActivity {
             do {
                 allData.add(c.getString(1));
             } while (c.moveToNext());
+            aData.notifyDataSetChanged();
+
+            ///Referencia del Listview para mostrar el menu
             registerForContextMenu(listData);
         } else {
             Toast.makeText(this, "No hay registros para mostrar", Toast.LENGTH_SHORT).show();
@@ -101,10 +122,12 @@ public class Producto extends AppCompatActivity {
     public  void addData(View v){
         Intent i = new Intent(Producto.this, Formulario.class);
         startActivity(i);
+        finish();
     }
 
     public  void home(View v){
         Intent i = new Intent(Producto.this, MainActivity.class);
         startActivity(i);
+        finish();
     }
 }

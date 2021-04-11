@@ -59,16 +59,44 @@ public class Formulario extends AppCompatActivity {
                 }
             }
         });
+
+        //Boton actualizar
+
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String idTXT = idProducto.getText().toString().trim();
+                String nombreTXT = nombre.getText().toString().trim();
+                String precioTXT = precio.getText().toString().trim();
+
+                if (validar()) {
+
+                    Boolean checkInsert = DB.updateData(idTXT, nombreTXT, precioTXT);
+
+                    //Evaluación de la data insertada
+                    if (checkInsert == true) {
+                        Toast.makeText(Formulario.this, "Se ha actualizado el registro", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        Toast.makeText(Formulario.this, "No se ha podido actualizar el registro", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
         //Boton eliminar
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String codproducro = idProducto.getText().toString();
+                String codproducro = idProducto.getText().toString().trim();
 
                 Boolean checkdelateData = DB.deleteData(codproducro);
                 if (checkdelateData == true) {
                     Toast.makeText(Formulario.this, "Se elimino exisitosamente",
                             Toast.LENGTH_SHORT).show();
+                    idProducto.setText("");
+                    nombre.setText("");
+                    precio.setText("");
                 } else {
                     Toast.makeText(Formulario.this, "Error no se pudo eliminar ",
                             Toast.LENGTH_SHORT).show();
@@ -83,6 +111,23 @@ public class Formulario extends AppCompatActivity {
         try {
             Bundle bundle = getIntent().getExtras();
             action = bundle.getString("action");
+            if (action.equals("edit")) {
+                delete.setVisibility(View.GONE);
+                insert.setVisibility(View.GONE);
+                update.setVisibility(View.VISIBLE);
+
+                id = bundle.getString("id");
+                String productos[] = bundle.getStringArray("productos");
+                TextView tem = (TextView) findViewById(R.id.idproducto);
+                tem.setText(id);
+
+                tem = (TextView) findViewById(R.id.nombre);
+                tem.setText(productos[0].toString());
+
+                tem = (TextView) findViewById(R.id.precio);
+                tem.setText(productos[1].toString());
+            }
+
             if (action.equals("delete")) {
                 delete.setVisibility(View.VISIBLE);
                 insert.setVisibility(View.GONE);
@@ -101,7 +146,7 @@ public class Formulario extends AppCompatActivity {
                 tem.setText(productos[1].toString());
             }
         } catch (Exception e) {
-            Toast.makeText(Formulario.this, "Error:" +
+            Toast.makeText(Formulario.this, "Error: " +
                     e.getMessage().toString(), Toast.LENGTH_LONG).show();
 
         }
@@ -133,4 +178,9 @@ public class Formulario extends AppCompatActivity {
         return retorno;
     }
 
+    public void v1(View view){
+        Intent a = new Intent(this, Producto.class);
+        startActivity(a);
+        finish();
+    }
 }
